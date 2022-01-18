@@ -1,13 +1,65 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*{
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+
+.grid-container{
+  
+  display: grid;
+  width: fit-content;
+  padding: 0.5rem;
+  grid-template-columns: repeat(5,5rem);
+  grid-template-rows: repeat(5,5rem);
+  grid-row-gap: 0.5rem;
+  grid-column-gap: 0.5rem;
+  border: 1px solid white;
+  background-color:whitesmoke;
+  margin-left:auto;
+  margin-right: auto;
+  position: relative;
+  
+
 }
+
+.grid-item{
+  text-align: center;
+  line-height: 5rem;
+  background-color: violet;
+  box-shadow: 8px 8px 2px 1px rgba(255, 255, 255, 0.2);
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid black;
+  transition: 0.3s ease-in;
+}
+
+/* positioning each divs in their position */
+.pos-0 , .pos-4 , .pos-8 , .pos-12{
+  margin-left:0.5rem;
+}
+.pos-1, .pos-5, .pos-9, .pos-13{
+  margin-left: calc(5rem + 1rem);;
+}
+.pos-2, .pos-6, .pos-10, .pos-14{
+  margin-left: calc(10rem + 1.5rem);
+}
+.pos-3, .pos-7, .pos-11, .pos-15{
+  margin-left: calc(15rem + 2rem);
+}
+
+.pos-0, .pos-1 , .pos-2 , .pos-3{
+  margin-top:0.5rem;
+}
+.pos-4, .pos-5, .pos-6, .pos-7{
+  margin-top: calc(5rem + 1rem);;
+}
+.pos-8, .pos-9, .pos-10, .pos-11{
+  margin-top: calc(10rem + 1.5rem);
+}
+.pos-12, .pos-13, .pos-14, .pos-15{
+  margin-top: calc(15rem + 2rem);
+}
+
