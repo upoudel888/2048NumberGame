@@ -5,6 +5,10 @@ import App from './App';
 import Body from './body';
 
 
+function moveTile(tile,pos){
+  
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Body/>

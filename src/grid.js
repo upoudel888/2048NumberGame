@@ -1,19 +1,13 @@
-const Grid = ({arr,firstLoad}) => {
+const Grid = ({arr,name}) => {
     
     return (
-        <div className="grid-container">
+        <div className={name[0]}>
             {
-                arr.map((elem)=>{
-                    let nameOfClass = `grid-item pos-${elem}`;
-                    if(!firstLoad){
-                        if(elem % 2 === 1){
-                            nameOfClass = `grid-item pos-${elem-1}`;
-                        }
-                    }
-                    return(
-                        <div className={nameOfClass} key ={elem}>{elem}</div>
-                    )
+                
+                arr.map(elem => {
+                        return(<div className={name[1] + ` pos-${elem}`} key ={elem}></div>)
                 })
+                
             }
         </div>
      );

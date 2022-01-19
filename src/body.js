@@ -1,7 +1,7 @@
 import Grid from './grid'
 import React from 'react'
 
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 
 
 const Body = () => {
@@ -9,18 +9,44 @@ const Body = () => {
         pos: 0,
         value: null
     }
-    const [arr,setArr] = useState([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+    const [tileCount,setTileCount] = useState(0);
+    
 
     let [firstLoad,setFirstLoad] = useState(true);
 
-    function transform(){
-        setFirstLoad(!firstLoad);
-        
+    const handleKeyPress = ()=>{
+        if(tileCount < 16){
+            const childTile = document.createElement("div");
+            childTile.classList.add('grid-tile',`pos-${tileCount}`);
+            childTile.textContent = 2;
+    
+            var parent = document.querySelector(".game-container");
+            parent.appendChild(childTile)
+            setTileCount(tileCount+1);
+            console.log("this code is runnig");
+        }else{
+            var tileSelect = document.querySelector(`.grid-tile.pos-${tileCount%15}`)
+            setInterval(()=>tileSelect.classList.remove(`pos-${tileCount%15}`),1);
+            setTimeout(()=>{
+                tileSelect.classList.add(`pos-${(tileCount+1) % 15}`);
+            },300);
+            setTileCount(tileCount+1);
+            
+        }
     }
+
+    useEffect(()=>{
+        document.addEventListener("keypress",handleKeyPress);
+        return ()=>{
+            document.removeEventListener("keypress",handleKeyPress)
+        }
+    },[tileCount]);
+
     return ( 
         <React.Fragment>
-            <Grid arr = {arr} firstLoad = {firstLoad}></Grid>
-            <button onClick = {transform}>ClickMe</button>
+            <Grid arr = {[...Array(16).keys()]} name = {['game-container','grid-cell']}></Grid>
+            
+            <button onClick = {handleKeyPress}>play</button>
         </React.Fragment>
      );
 }
