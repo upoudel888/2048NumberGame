@@ -5,6 +5,33 @@
 }
 
 
+.score-board{
+  /* aligning */
+    margin-left: auto;
+    margin-right: auto;
+  /* sizing */
+    width: 23rem;
+  
+    /* border-bottom:  2px rgba(27, 26, 26, 0.2) ;
+    border-right :  2px rgba(27, 26, 26, 0.2) ; */
+    box-shadow: 2px 2px 2px 1px rgba(27, 26, 26, 0.2);
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-row-gap: 1%;
+    grid-column-gap: 1%;
+  }
+
+
+.score,.max{
+  width: 33%;
+}
+
+.score{
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
 
 .game-container{
   
@@ -21,6 +48,8 @@
   margin-left:auto;
   margin-right: auto;
   position: relative; 
+
+  font-size: 3rem;
   
 
 }
@@ -39,9 +68,9 @@
 }
 
 .grid-tile{
-  transition: 0.3s ease-in;
   background-color: thistle;
   border: 5px solid black;
+  transition: 0.15s ease-in-out;
   z-index: 1;
 }
 
@@ -73,3 +102,66 @@
   margin-top: calc(15rem + 2rem);
 }
 
+.scale-in-center {
+  -webkit-animation: scale-in-center 0.2aws cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          animation: scale-in-center 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes scale-in-center {
+0% {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  opacity: 1;
+}
+100% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 1;
+}
+}
+@keyframes scale-in-center {
+0% {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  opacity: 1;
+}
+100% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 1;
+}
+}
+
+/* pulsate animation */
+.pulsate-fwd {
+	-webkit-animation: pulsate-fwd 0.2s ease-in-out both;
+	        animation: pulsate-fwd 0.2s ease-in-out both;
+}
+@-webkit-keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
