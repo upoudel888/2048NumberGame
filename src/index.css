@@ -70,7 +70,7 @@
 .grid-tile{
   background-color: thistle;
   border: 5px solid black;
-  transition: 0.15s ease-in-out;
+  transition: margin 0.15s ease-in-out;
   z-index: 1;
 }
 
@@ -109,8 +109,8 @@
 
 @-webkit-keyframes scale-in-center {
 0% {
-  -webkit-transform: scale(0);
-          transform: scale(0);
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
   opacity: 1;
 }
 100% {
@@ -121,8 +121,8 @@
 }
 @keyframes scale-in-center {
 0% {
-  -webkit-transform: scale(0);
-          transform: scale(0);
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
   opacity: 1;
 }
 100% {
