@@ -7,7 +7,6 @@ class Board{
     choices;                //numbers that randomly appear on board i.e [2,4]
 
     needsReset;
-    processing;
 
     constructor(){
        
@@ -20,7 +19,7 @@ class Board{
         this.emptyPos = Array.from(Array(16).keys());
         this.choices = [2,2,2,4,2,2,2,4,2,2];             //biasing the random number that appear
         this.needsReset = false;
-        this.processing = false;
+        
     }
     
     setParent(){
@@ -42,23 +41,26 @@ class Board{
         this.emptyPos = Array.from(Array(16).keys());
     }
 
-    //adds 2 or 4 in vacant blocks and updates the DOM
-    //returns 0 if no empty position is found
-    //return maximum digit on the board if update is successful
-
-    //resetFlag is true when the user presses newGame button
+    
+    //update the board with new tile
     update(numberOfInsertions = 1){
 
         console.log(this.board);
 
+        //remove a tile with .delete class if any
+        setTimeout(()=>{
+            let removeEle = document.querySelectorAll('.delete');
+            if(removeEle){
+                removeEle.forEach(ele => ele.remove());
+            } 
+        },400);
+
         //this may signify gameOver condition provided there are no valid moves left
         if(this.emptyPos.length === 0) return 0; 
 
-        
-        
         let sum;
         let max;
-        let prevPos;
+
         for(var i =0; i< numberOfInsertions; i++){
             
             let randLet = this.choices[Math.floor(Math.random()*this.choices.length)];
@@ -66,174 +68,132 @@ class Board{
 
             //adding new tiles to the DOM
             let childTile = document.createElement('div');
-            childTile.classList.add("grid-tile",`pos-${randPos}`,'scale-in-center');
+            childTile.classList.add("grid-tile",`pos-${randPos}`,`color-${randLet}`,'scale-in-center');
             childTile.textContent = randLet;
             this.parent.appendChild(childTile);
+            
         
 
             max = 0;
             sum = 0;
-            let count =0;
-
+    
             for(let i = 0; i<4; i++){
                 for(let j=0; j<4; j++){
-
-                    //updating the board and emptyPos
-                    if(count === randPos){
+                    //updating the board and emptyPos Array
+                    if(i*4+j === randPos){
                         this.board[i][j] = randLet;
-                        //updating the latest emptyPos
+                        //updating the vacant positions on the board
                         let deletePos = this.emptyPos.indexOf(randPos);
                         this.emptyPos.splice(deletePos,1);
 
                     }
-                    //finding max in board
+                    //finding max in the board
                     if(this.board[i][j] > max) max = this.board[i][j];
 
-                    //finding the sum
+                    //finding the sum of numbers in the board
                     sum+=this.board[i][j]
 
-                    count++;
                 }
             }
-            prevPos = randPos;
         }
         return [sum,max];
     }
 
-
-    //this function is exception handler
-    //exception occurs when code is ahed of the DOM
-    //like when .grid-tile.pos-10 is being accessed when it is just updating in DOM
-    updateTileFromBoard(from = -1,addFlag){
-        let allTiles = document.querySelectorAll('.grid-tile');
-        if(allTiles){
-            allTiles.forEach(elem => elem.remove());
-        }
-        for(let i = 0; i<4; i++){
-            for(let j = 0; j<4; j++){
-                if(this.board[i][j]){
-                    if(addFlag && i*4+j == from){
-                        continue;
-                    }else{
-                        let childTile = document.createElement('div');
-                        childTile.classList.add("grid-tile",`pos-${i*4+j}`);
-                        this.parent.appendChild(childTile);
-                        childTile.textContent = this.board[i][j];
-                    }
-                    
-                    
-                }
-            }
-        }
-
-        
-    }
-
-
-
+    //addFlag is true when two adjacent tiles add up
+    //when true the tile which shifts from "from" to "to" is to be removed after shifting
+    //and the tile previously at "to" is to be updated with new number
     moveX(from,to,addFlag = false){
+
+        //requires no shifting
+        if(from === to) return;
+
         //selecting the tile specified by from
-        //this tile is to be removed
-        try{
-            let tile = document.querySelector(`.grid-tile.pos-${from}`);
+        //this tile is to be first shifted 
+        let tile = document.querySelector(`.grid-tile.pos-${from}:not(.delete)`);
+        let factor = to % 4;
+        tile.style.marginLeft = `${5*factor + 0.5 * (factor+1)}rem`;   //calculated CSS positioning
 
-            if(!tile) throw [from,to,addFlag];
-           
-            let factor = to % 4;
-            tile.style.marginLeft = `${5*factor + 0.5 * (factor+1)}rem`;   //calculated CSS positioning
-
+        //if addFlag tile at "from" is to be deleted
+        if(addFlag){
+    
+            tile.classList.add('delete');
         
-            if(addFlag){
-
-                tile.style.zIndex = '0';
-                
-                tile.classList.add('delete');
+            //updating the tile at "to" with new number and pulsate fwd animation
+            let tilePrev = document.querySelector(`.grid-tile.pos-${to}:not(.delete)`);
+            tilePrev.classList.remove('scale-in-center','pulsate-fwd');  
             
-                //selecting the tile that was previously there to where we shift
-                //the updating it with the new number with pulsate-fwd animation
-                let tilePrev = document.querySelector(`.grid-tile.pos-${to}`);
+            setTimeout(()=>{ //shifting of tiles finshes within 150ms only after which numbers update
                 tilePrev.textContent = this.board[Math.floor(to/4)][to%4];
-                tilePrev.classList.remove('scale-in-center','pulsate-fwd');  
-                
-                setTimeout(()=>{
-                    tilePrev.classList.add('pulsate-fwd');
-                },100);
+                tilePrev.classList.add('pulsate-fwd');
+            },150);
 
-                //200ms because the animation if of that duration
-                setTimeout(()=>{
-                    let removeEle = document.querySelector('.delete');
-                    if(!removeEle){
-                        console.log('trying to remove from',from)
-                    }
-                    removeEle.remove(); 
+            //to delete first zIndex is changed to -1 to make it invisible on the board
+            //finally the update method removes the tiles with "delete" class, on next keypress
+            setTimeout(()=>{
+                let removeEle = document.querySelectorAll('.delete');
+                if(removeEle){
+                    removeEle.forEach(ele => ele.style.zIndex = -1);
+                } 
+            },100);
 
-                },100);
-
-                
-            }else{
-                tile.classList.remove('scale-in-center',`pos-${from}`);
-                tile.classList.add(`pos-${to}`);
-            }
-        }catch([from,to,addFlag]){
-            console.log("here\nhere\nhere");
-            console.log(from,'-->',to,addFlag);
-            this.updateTileFromBoard(from);
-
+        }else{
+            tile.classList.remove('scale-in-center',`pos-${from}`);
+            tile.classList.add(`pos-${to}`);
         }
+        
     }
 
     
 
     moveY(from,to,addFlag = false){
 
-        try{
-            //selecting the tile specified by from
-            //this tile is to be removed
-            let tile = document.querySelector(`.grid-tile.pos-${from}`);
-
-            if(!tile) throw [from,to,addFlag];
-           
-            let factor = Math.floor(to/4);
-            tile.style.marginTop = `${5*factor + 0.5 * (factor+1)}rem`;   //calculated CSS positioning
-            if(addFlag){
-    
-                tile.style.zIndex = '0';
-                tile.classList.add('delete');
-            
-                //selecting the tile that was previously there to where we shift
-                //the updating it with the new number with pulsate-fwd animation
-                let tilePrev = document.querySelector(`.grid-tile.pos-${to}`);
-                tilePrev.textContent = this.board[Math.floor(to/4)][to%4];
-                tilePrev.classList.remove('scale-in-center','pulsate-fwd');  
-    
-                setTimeout(()=>{
-                    tilePrev.classList.add('pulsate-fwd');
-                },100);
-    
-                //200ms because the animation if of that duration
-                setTimeout(()=>{
-                    let removeEle = document.querySelector('.delete');
-                    if(!removeEle){
-                        console.log('trying to remove from',from)
-                    }
-                    removeEle.remove();
-                },200);
-    
-                
-            }else{
-                tile.classList.remove('scale-in-center',`pos-${from}`);
-                tile.classList.add(`pos-${to}`);
-            }
-            
-        }catch([from,to,addFlag]){
-            console.log("here\nhere\nhere");
-            console.log(from,'-->',to,addFlag);
-            this.updateTileFromBoard(from,addFlag);
-        }      
-    }
-    
-    clearLeft(){
+        if(from === to) return;
+     
+        let tile = document.querySelector(`.grid-tile.pos-${from}:not(.delete)`);
+        let factor = Math.floor(to/4);
+        tile.style.marginTop = `${5*factor + 0.5 * (factor+1)}rem`;   //calculated CSS positioning
         
+        if(addFlag){
+
+            // tile.style.zIndex = '0';
+            tile.classList.add('delete');
+        
+            //updating tile at to
+            let tilePrev = document.querySelector(`.grid-tile.pos-${to}`);
+            tilePrev.classList.remove('scale-in-center','pulsate-fwd');  
+            
+            //updating the text content and adding the animation
+            setTimeout(()=>{ 
+                tilePrev.textContent = this.board[Math.floor(to/4)][to%4];
+                tilePrev.classList.add('pulsate-fwd');
+            },150);
+
+            //adding delete class and changing the Z index
+            setTimeout(()=>{
+                let removeEle = document.querySelectorAll('.delete');
+                if(removeEle){
+                    removeEle.forEach(ele => ele.style.zIndex = -1);
+                }        
+            },200);
+
+            
+        }else{
+            tile.classList.remove('scale-in-center',`pos-${from}`);
+            tile.classList.add(`pos-${to}`);
+        }
+    }
+            
+
+
+
+    //removes empty spaces in the middle of the board while moving left i.e a pressed
+
+    // 2    2   ..  2     changes to    2   2   2   ..        where .. signify null value
+    // ..   ..  ..  2                   2   ..  ..  ..                 on this.board
+    // 4    4   4   4                   4   4   4   4
+    // ..   ..  2   2                   2   2   ..  ..
+    clearLeft(){
+    
         let vacantArray = [
             [null,null,null,null],
             [null,null,null,null],
@@ -247,7 +207,7 @@ class Board{
             for(let j=0; j<4; j++){
                 if(this.board[i][j] !== null){
                     vacantArray[i][nonZeroCount] = this.board[i][j];
-                    //updating the dom
+                    //updating the dom by shifting the tiles
                     this.moveX(i*4+j,i*4+nonZeroCount);
                     nonZeroCount++;   
                 }
@@ -258,10 +218,12 @@ class Board{
         this.board = vacantArray;
     }
 
+    //after clearLeft runs this function adds two adjacent tiles if they are same
+    //  2   2   2   ..     changes to  4    2   ..  ..
+    //  2   ..  ..  ..                 2    ..  ..  .. 
+    //  4   4   4   4                  8    8   ..  ..  
+    //  2   2   ..  ..                 4    ..  ..  ..  
 
-    
-    
-    //moves blocks to the left 
     addLeft(){
         for(let i =0; i< 4; i++){
             for(let j = 0 ; j<4 ; j++){
@@ -269,12 +231,12 @@ class Board{
                 if(this.board[i][j]===this.board[i][j+1] && this.board[i][j+1] !== null){
                     this.board[i][j] += this.board[i][j+1];
 
-                    // //updating the dom
-                    this.moveX(i*4+(j+1),i*4+j,true);
-                   
+                    //updating the dom
                     //shifting tile -> changing zIndex -> removing that tile
                     //because the last param is true
-                    
+                    this.moveX(i*4+(j+1),i*4+j,true);
+                   
+                    //shifting the preceeding tiles one step left
                     for(let k = j+1; k < 4 ; k++){
                         if(k != 3){
                             this.board[i][k] = this.board[i][k+1];
@@ -423,7 +385,7 @@ class Board{
                 if(this.board[i][j] != null){
                     vacantArray[3-nonZeroCount][j] = this.board[i][j];
                     this.moveY(i*4+j,(3-nonZeroCount)*4+j)
-                
+
                     nonZeroCount ++;
                 }
             }
@@ -461,11 +423,20 @@ class Board{
 
     updateEmptyPos(){
         let count = 0;
+        let ele;
         this.emptyPos = new Array;
         for(let i =0; i< 4; i++){
             for(let j = 0 ; j<4 ; j++){
                 if(this.board[i][j] === null){
                     this.emptyPos.push(count);
+                }else{
+                    setTimeout(()=>{
+                        ele = document.querySelector(`.grid-tile.pos-${i*4+j}:not(.delete)`);
+                        if(ele){
+                            ele.textContent = this.board[i][j];
+                            ele.classList.add(`color-${this.board[i][j]}`);                       
+                        }
+                    },150);
                 }
                 count ++;
             }
@@ -474,39 +445,30 @@ class Board{
 
     //when user presses a key
     a_pressed(){
-        this.processing = true;
         this.clearLeft();
         this.addLeft();
         this.updateEmptyPos();
-        this.processing = false;
     }
 
     //when user presses d key
     d_pressed(){
-        this.processing = true;
         this.clearRight();
         this.addRight();
         this.updateEmptyPos();
-        this.processing = false;
     }
 
     //when user presses w key
     w_pressed(){
-        this.processing = true;
         this.clearUp();
         this.addUp();
         this.updateEmptyPos();
-        this.processing = false;
-
     }
 
     //when user presses s key
     s_pressed(){
-        this.processing = true;
         this.clearDown();
         this.addDown();
         this.updateEmptyPos();
-        this.processing = false;
     }
 
     //check if GAME IS OVER
@@ -530,8 +492,6 @@ class Board{
         }
         return flag;
     }
-
-
 }
 
 export default Board;

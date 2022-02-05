@@ -2,6 +2,7 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
+  background-color: rgba(68, 64, 64, 0.2);
 }
 
 
@@ -44,7 +45,7 @@
   grid-row-gap: 0.5rem;
   grid-column-gap: 0.5rem;
   border: 1px solid white;
-  background-color:whitesmoke;
+  background-color:#d9d7ca;
   margin-left:auto;
   margin-right: auto;
   position: relative; 
@@ -59,7 +60,7 @@
   text-align: center;
   line-height: 5rem;
   background-color: rgba(68, 64, 64, 0.2);
-  box-shadow: 2px 2px 2px 1px rgba(27, 26, 26, 0.2);
+  box-shadow: 1px 1px 2px 1px rgba(27, 26, 26, 0.2);
   position: absolute;
   width: 5rem;
   height: 5rem;
@@ -69,7 +70,6 @@
 
 .grid-tile{
   background-color: thistle;
-  border: 5px solid black;
   transition: margin 0.15s ease-in-out;
   z-index: 1;
 }
@@ -103,14 +103,14 @@
 }
 
 .scale-in-center {
-  -webkit-animation: scale-in-center 0.2aws cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: scale-in-center 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
           animation: scale-in-center 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 @-webkit-keyframes scale-in-center {
 0% {
-  -webkit-transform: scale(0.5);
-          transform: scale(0.5);
+  -webkit-transform: scale(0);
+          transform: scale(0);
   opacity: 1;
 }
 100% {
@@ -121,10 +121,11 @@
 }
 @keyframes scale-in-center {
 0% {
-  -webkit-transform: scale(0.5);
-          transform: scale(0.5);
-  opacity: 1;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  opacity: 0;
 }
+
 100% {
   -webkit-transform: scale(1);
           transform: scale(1);
@@ -164,4 +165,39 @@
     -webkit-transform: scale(1);
             transform: scale(1);
   }
+}
+
+
+.color-2{
+  background-color:  rgba(1, 152, 117, 1 ) ;
+}
+.color-4{
+  background-color: rgb(13, 179, 185);
+}
+.color-8{
+  background-color: rgba(38, 166, 91, 1 );
+}
+.color-16{
+  background-color: rgba(3, 201, 169, 1);
+}
+.color-32{
+  background-color: rgba(104, 195, 163, 1 );
+}
+.color-64{
+  background-color: rgb(0, 208, 183);
+}
+.color-128{
+  background-color: rgba(27, 163, 156, 1 );
+}
+.color-256{
+  background-color:rgba(102, 204, 153, 1 );
+}
+.color-512{
+  background-color: rgba(54, 215, 183, 1 );
+}
+.color-1024{
+  background-color: rgba(200, 247, 197, 1 );
+}
+.color-2048{
+  background-color: rgb(255, 60, 236);
 }
