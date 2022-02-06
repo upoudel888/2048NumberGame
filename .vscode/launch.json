@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        
+        {
+            "type": "pwa-msedge",
+            "name": "http://localhost:3000/",
+            "request": "launch",
+            "url": "http://localhost:3000/"
+        },
+        {
+            "name": "Launch Microsoft Edge and open the Edge DevTools",
+            "request": "launch",
+            "type": "vscode-edge-devtools.debug",
+            "url": "" // Provide your project's url to finish configuring
+        }
+    ]
+}

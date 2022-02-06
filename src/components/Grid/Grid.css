@@ -1,0 +1,180 @@
+.game-container{
+    /* to style the cells and tiles absolute to it */
+    position: relative; 
+    display: grid;
+    width: 22.5rem;
+    height: 22.5rem;
+    padding: 0.5rem;
+    grid-template-columns: repeat(4,5rem);
+    grid-template-rows: repeat(4,5rem);
+    grid-row-gap: 0.5rem;
+    grid-column-gap: 0.5rem;
+    background-color:#d9d7ca;
+    margin-left:auto;
+    margin-right: auto;
+    font-size: 3rem;
+    box-shadow: 1px 1px 2px 1px rgba(27, 26, 26, 0.2);
+    border-radius: 2%;
+}
+
+.grid-cell,.grid-tile{
+    position: absolute;
+    text-align: center;
+    line-height: 5rem;
+    background-color: rgba(68, 64, 64, 0.2);
+    box-shadow: 1px 1px 2px 1px rgba(27, 26, 26, 0.2);
+    width: 5rem;
+    height: 5rem;
+    border-radius: 10%;
+}
+
+.grid-cell,.grid-tile{
+    position: absolute;
+    text-align: center;
+    line-height: 5rem;
+    background-color: rgba(68, 64, 64, 0.2);
+    box-shadow: 1px 1px 2px 1px rgba(27, 26, 26, 0.2);
+    width: 5rem;
+    height: 5rem;
+    border-radius: 10%;
+}
+  
+.grid-tile{
+    transition: margin 0.15s ease-in-out;
+    z-index: 1;
+}
+  
+  
+/* positioning each divs in their position */
+.pos-0 , .pos-4 , .pos-8 , .pos-12{
+    margin-left:0.5rem;
+}
+.pos-1, .pos-5, .pos-9, .pos-13{
+    margin-left: calc(5rem + 1rem);;
+}
+.pos-2, .pos-6, .pos-10, .pos-14{
+    margin-left: calc(10rem + 1.5rem);
+}
+.pos-3, .pos-7, .pos-11, .pos-15{
+    margin-left: calc(15rem + 2rem);
+}
+  
+.pos-0, .pos-1 , .pos-2 , .pos-3{
+    margin-top:0.5rem;
+}
+.pos-4, .pos-5, .pos-6, .pos-7{
+    margin-top: calc(5rem + 1rem);;
+}
+.pos-8, .pos-9, .pos-10, .pos-11{
+    margin-top: calc(10rem + 1.5rem);
+}
+.pos-12, .pos-13, .pos-14, .pos-15{
+    margin-top: calc(15rem + 2rem);
+}
+  
+.scale-in-center {
+    -webkit-animation: scale-in-center 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: scale-in-center 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+  
+@-webkit-keyframes scale-in-center {
+    0% {
+        -webkit-transform: scale(0);
+            transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1);
+            transform: scale(1);
+        opacity: 1;
+    }
+    }
+    @keyframes scale-in-center {
+    0% {
+        -webkit-transform: scale(0);
+            transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+            transform: scale(1);
+        opacity: 1;
+    }
+}
+  
+/* pulsate animation */
+.pulsate-fwd {
+    -webkit-animation: pulsate-fwd 0.2s ease-in-out both;
+            animation: pulsate-fwd 0.2s ease-in-out both;
+}
+@-webkit-keyframes pulsate-fwd {
+    0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+    }
+    @keyframes pulsate-fwd {
+    0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+}
+
+
+.color-2{
+background-color:  rgba(1, 152, 117, 1 ) ;
+}
+.color-4{
+background-color: rgb(13, 179, 185);
+}
+.color-8{
+    background-color: rgba(38, 166, 91, 1 );
+}
+.color-16{
+    background-color:rgb(85, 144, 114);
+}
+.color-32{
+    background-color: rgb(51, 126, 81);
+}
+.color-64{
+    background-color: rgb(14, 99, 82);
+}
+.color-128{
+    background-color: rgb(20, 176, 220);
+}
+.color-256{
+    background-color: rgb(60, 149, 204);
+}
+.color-512{
+    background-color: rgb(191, 118, 240);
+}
+.color-1024{
+    background-color: rgb(65, 101, 209);
+}
+.color-2048{
+    background-color: rgb(255, 60, 236);
+}
+.color-4096{
+    background-color: rgb(216, 15, 238) ;
+}
+.color-8192{
+    background-color: blueviolet;
+}
+

@@ -471,9 +471,9 @@ class Board{
         this.updateEmptyPos();
     }
 
-    //check if GAME IS OVER
-    //returns 1 if game is not over
-    checkOver(){
+    //returns true if game is playable
+    checkPlayable(){
+        if(this.emptyPos.length) return true;
         for(let i =0 ; i < 3 ; i++){
             for(let j = 0; j < 3 ; j++ ){
                 if(this.board[i][j] === this.board[i][j+1] || this.board[i][j]===this.board[i+1][j]){

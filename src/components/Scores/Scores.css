@@ -1,0 +1,21 @@
+.score-board{
+    margin-left: auto;
+    margin-right: auto;
+    width: 23rem;
+    box-shadow: 2px 2px 2px 1px rgba(27, 26, 26, 0.2);
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-row-gap: 1%;
+    grid-column-gap: 1%;
+  }
+
+
+.score,.max{
+  width: 33%;
+}
+
+.score{
+  grid-column: 1/2;
+  grid-row: 1/2;
+}

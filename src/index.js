@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App'
 import './index.css';
-import Board from './board'
-import Body from './body';
+import Board from './modules/board'
+
 
 let game = new Board();
 
-
 ReactDOM.render(
   <React.StrictMode>
-    <Body game = {game}/>
+    <App game = {game}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
