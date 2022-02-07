@@ -5,7 +5,7 @@
 }
 
 body{
-  background-color: rgba(68, 64, 64, 0.2);
+  background-color: #1B4B5A;
   
 }
 
@@ -75,34 +75,5 @@ body{
   100% {
       -webkit-transform: scale(1);
               transform: scale(1);
-  }
-}
-
-/* blink-1 animation for score update */
-.blink-1 {
-	-webkit-animation: blink-1 0.2s both;
-	        animation: blink-1 0.2s both;
-}
-
- @-webkit-keyframes blink-1 {
-  0%,
-  50%,
-  100% {
-    opacity: 1;
-  }
-  25%,
-  75% {
-    opacity: 0;
-  }
-}
-@keyframes blink-1 {
-  0%,
-  50%,
-  100% {
-    opacity: 1;
-  }
-  25%,
-  75% {
-    opacity: 0;
   }
 }

@@ -101,21 +101,6 @@ class Board{
             }
         }
 
-        //removing blink class so that the score blink animation occurs again when scores are updated
-        let blinkElements = document.querySelectorAll(".score-numbers");
-
-        let compareTo = sum;
-        for(let keyOfBlinkElement in blinkElements){  //for in loop iterates over keys of an object not the value
-            let i = keyOfBlinkElement;
-            if(blinkElements[i].innerHTML < compareTo){
-                blinkElements[i].classList.remove('blink-1');
-                setInterval(()=>{
-                    blinkElements[i].classList.add('blink-1');
-                },100);
-            }
-            compareTo = max;
-        }
-
         // updating and checking the local storage 
 
         //checking if new best has been set
@@ -125,13 +110,13 @@ class Board{
         }
         if(sum > allTimeBest){
             localStorage.setItem('best2048NumberGame',sum);
-            console.log(max);
+            allTimeBest = sum;
         }
 
         localStorage.setItem("board2048NumberGame",this.board);
         localStorage.setItem("playable2048NumberGame",1);
 
-        return [sum,max];
+        return [sum,max,allTimeBest];
     }
 
     //addFlag is true when two adjacent tiles add up
@@ -526,7 +511,6 @@ class Board{
     //setsBoardFromLocal
     setFromLocal(){
         let boardOnLocalStorage = localStorage.getItem('board2048NumberGame');
-        let bestOnLocalStorage = localStorage.getItem('best2048NumberGame');
 
         let boardArray = boardOnLocalStorage.split(",",16);
 
@@ -543,7 +527,7 @@ class Board{
             }
         }
         this.updateEmptyPos();
-        return [boardArray.reduce((sum,val)=>sum+Number(val),0),Math.max(...boardArray),bestOnLocalStorage];
+        return [boardArray.reduce((sum,val)=>sum+Number(val),0),Math.max(...boardArray)];
     }
 }
 

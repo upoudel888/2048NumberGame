@@ -6,15 +6,10 @@ import {Grid,Scores} from './components'
 import './App.css';
 
 function App({game}) {
-  // console.log('this thing rerenders');
+  
   const [scoreMaxArr,setScoreMaxArr] = useState([0,0]);
   const [gameStatus,setGameStatus] = useState(null); //becomes 'lost' if user is out of moves
-
-  // if(firstRender){
-  //   alert("wassup biyoch");
-  //   setFirstRender(false);
-  // }
-
+  const [bestScore,setBestScore] = useState(0);
 
   const handleKeyPress = (e)=>{
 
@@ -49,9 +44,11 @@ function App({game}) {
     }
     if(updateFlag){
       if(JSON.stringify(game.board)!==JSON.stringify(boardBeforeUpdate)){
-        status = game.update();
+        status = game.update(); //returns array [sum,max,allTimeBestScore]
         if(status !== 0){
-          setScoreMaxArr(status);
+          setScoreMaxArr([status[0],status[1]]);
+          setBestScore([status[2]]);
+          
         }
       }else{
         if(game.checkPlayable()===false){
@@ -64,9 +61,9 @@ function App({game}) {
   }
 
   const handleNewGame = ()=>{
-    setGameStatus(null)
-    game.resetGame();
+    setGameStatus(null);
     game.setParent();
+    game.resetGame();
     game.update(2);
     setScoreMaxArr([0,0]);
   }
@@ -79,11 +76,24 @@ function App({game}) {
       }
   },[game]);
 
+  //this sippet runs after the first render is complete
+  //it sets the board back to where the user left
+  useEffect(()=>{
+    game.setParent();
+    if(Number(localStorage.getItem('playable2048NumberGame'))){
+      let [sum,max,best] = game.setFromLocal(); //this method returns an array [sum,max,bestScore]
+      setScoreMaxArr([sum,max]);
+    }
+    //returns unidentified if not found
+    let scoreOnLocal = localStorage.getItem('best2048NumberGame');
+    if(scoreOnLocal === null) scoreOnLocal = 0;
+    setBestScore(Number(scoreOnLocal));
+  },[]);
+
   return (
     <React.Fragment>
-      <Scores scoreMax = {scoreMaxArr} newGame = {handleNewGame}/>
-      <Grid arr = {[...Array(16).keys()]} name = {['game-container','grid-cell']} tryAgain = {handleNewGame} gameStatus = {gameStatus}/>
-      <button onClick = {()=>{game.setParent();game.setFromLocal();}}> purano </button>
+      <Scores scoreMaxBest = {[scoreMaxArr,bestScore]} newGame = {handleNewGame}/>
+      <Grid arr = {[...Array(16).keys()]} name = {['game-container','grid-cell']} tryAgain = {handleNewGame} gameStatus = {gameStatus} />
     </React.Fragment>   
   );
 }
