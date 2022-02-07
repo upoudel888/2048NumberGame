@@ -7,7 +7,7 @@ import './Grid.css'
     
 */
 const Grid = ({arr,name,tryAgain,gameStatus}) => {
-    let status = (gameStatus === 'lost')? 0.6:0;
+    let status = (gameStatus === 'lost')? 0.7:0;
     let styleForOverlay = {
         opacity : status
     }
@@ -25,9 +25,9 @@ const Grid = ({arr,name,tryAgain,gameStatus}) => {
             }
             <div className="overlay" style = {styleForOverlay}>
             </div>
-            <div className="message msg1" style = {styleForMessage}>Out of moves<br/>
+            <div className="message msg1" style = {styleForMessage}>Out of moves !<br/>
                 <button className = 'try-again' onClick = {tryAgain}>Try Again</button>
-            </div>
+            </div> 
         </div>
      );
 }
