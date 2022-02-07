@@ -1,21 +1,54 @@
 .score-board{
-    margin-left: auto;
-    margin-right: auto;
-    width: 23rem;
-    box-shadow: 2px 2px 2px 1px rgba(27, 26, 26, 0.2);
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-row-gap: 1%;
-    grid-column-gap: 1%;
-  }
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-left: auto;
+  margin-right: auto;
+  width: 23rem;
+  height: 15vh;
+  grid-row-gap: 1%;
+  grid-column-gap: 1%;
+  color: rgba(45, 44, 44, 0.884);
+}
 
 
 .score,.max{
-  width: 33%;
+  /* width: 33%; */
+  /* border: 2px solid black; */
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.score-numbers{
+  font-size: 2rem;
+  color: rgb(24, 123, 65);
 }
 
 .score{
   grid-column: 1/2;
-  grid-row: 1/2;
+  grid-row: 1/3;
+}
+.max{
+  grid-column: 2/3;
+  grid-row: 1/3;
+}
+
+.new-game{
+  grid-column: 3/4;
+  grid-row: 2/3;
+  font-size: 1rem;
+  background-color: #d9d7ca;
+  color: rgba(45, 44, 44, 0.884);
+  cursor: pointer;
+  border-radius: 0.5rem;
+  box-shadow: 1px 1px 1px 1px rgba(45, 44, 44, 0.884);
+}
+
+.new-game:hover{
+  box-shadow: 1px 1px 2px 2px rgba(45, 44, 44, 0.884);;
+}
+
+.new-game:active{
+  background-color: #dad6be;
 }

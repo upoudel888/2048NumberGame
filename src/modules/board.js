@@ -22,6 +22,8 @@ class Board{
         
     }
     
+    //when constructor runs in index.js there is no element with class '.game-container'
+    //so in App.js we set the parent
     setParent(){
         this.parent = document.querySelector(".game-container");
     }
@@ -96,6 +98,22 @@ class Board{
                 }
             }
         }
+
+        //removing blink class so that the score blink animation occurs again when scores are updated
+        let blinkElements = document.querySelectorAll(".score-numbers");
+
+        let compareTo = sum;
+        for(let keyOfBlinkElement in blinkElements){  //for in loop iterates over keys of an object not the value
+            let i = keyOfBlinkElement;
+            if(blinkElements[i].innerHTML < compareTo){
+                blinkElements[i].classList.remove('blink-1');
+                setInterval(()=>{
+                    blinkElements[i].classList.add('blink-1');
+                },100);
+            }
+            compareTo = max;
+        }
+
         return [sum,max];
     }
 
@@ -188,7 +206,7 @@ class Board{
 
     //removes empty spaces in the middle of the board while moving left i.e a pressed
 
-    // 2    2   ..  2     changes to    2   2   2   ..        where .. signify null value
+    // 2    2   ..  2     changes to    2   2   2   ..        where .. signifies null value
     // ..   ..  ..  2                   2   ..  ..  ..                 on this.board
     // 4    4   4   4                   4   4   4   4
     // ..   ..  2   2                   2   2   ..  ..
@@ -233,7 +251,7 @@ class Board{
 
                     //updating the dom
                     //shifting tile -> changing zIndex -> removing that tile
-                    //because the last param is true
+                    //because the last parameter is true
                     this.moveX(i*4+(j+1),i*4+j,true);
                    
                     //shifting the preceeding tiles one step left
@@ -282,14 +300,9 @@ class Board{
         
     }
 
-
-    
-    
-    //moves blocks to the left 
     addRight(){
         for(let i =0; i< 4; i++){
             for(let j = 3; j>=1 ; j--){
-                //if two adjacent ones are found equal DOUBLE THE RIGHT ONE AND SHIFT THE PRECEEDING ONES 
                 if(this.board[i][j]===this.board[i][j-1] && this.board[i][j-1] !== null){
 
                     this.board[i][j] += this.board[i][j-1];
@@ -339,13 +352,12 @@ class Board{
         
     }
 
-    //moves blocks to the left 
+    
     addUp(){
 
         
         for(let j =0; j< 4; j++){
             for(let i = 0 ; i<3 ; i++){
-                //if two adjacent ones are found equal DOUBLE THE FIRST ONE AND SHIFT THE PRECEEDING ONES
 
                 if(this.board[i][j]===this.board[i+1][j] && this.board[i+1][j] != null){
                     this.board[i][j] += this.board[i+1][j];
@@ -395,12 +407,10 @@ class Board{
         
     }
 
-    //moves blocks to the left 
     addDown(){
         for(let j =0; j< 4; j++){
             for(let i = 3 ; i>=1 ; i--){
-                //if two adjacent ones are found equal DOUBLE THE FIRST ONE AND SHIFT THE PRECEEDING ONES
-
+                
                 if(this.board[i][j]===this.board[i-1][j] && this.board[i-1][j] !== null){
                     this.board[i][j] += this.board[i-1][j];        
                     this.moveY((i-1)*4+j,i*4+j,true);
@@ -430,6 +440,7 @@ class Board{
                 if(this.board[i][j] === null){
                     this.emptyPos.push(count);
                 }else{
+                    //updating tile content just in case moveX and moveY don't work as expected
                     setTimeout(()=>{
                         ele = document.querySelector(`.grid-tile.pos-${i*4+j}:not(.delete)`);
                         if(ele){
@@ -440,7 +451,7 @@ class Board{
                 }
                 count ++;
             }
-        }
+        }        
     }
 
     //when user presses a key
