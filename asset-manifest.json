@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/2048NumberGame/static/css/main.d61dc0f9.css",
+    "main.js": "/2048NumberGame/static/js/main.0441da14.js",
+    "index.html": "/2048NumberGame/index.html",
+    "main.d61dc0f9.css.map": "/2048NumberGame/static/css/main.d61dc0f9.css.map",
+    "main.0441da14.js.map": "/2048NumberGame/static/js/main.0441da14.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d61dc0f9.css",
+    "static/js/main.0441da14.js"
+  ]
+}
