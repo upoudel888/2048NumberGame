@@ -22,12 +22,12 @@ class Board{
         
     }
     
+    
     //when constructor runs in index.js there is no element with class '.game-container'
     //so in App.js we set the parent
     setParent(){
         this.parent = document.querySelector(".game-container");
     }
-
 
     resetGame(){
         let allTiles = document.querySelectorAll('.grid-tile');
@@ -45,6 +45,8 @@ class Board{
 
     
     //update the board with new tile
+    // check if new score and new max has been set
+    // update the local storage with new board and new score
     update(numberOfInsertions = 1){
 
         console.log(this.board);
@@ -113,6 +115,21 @@ class Board{
             }
             compareTo = max;
         }
+
+        // updating and checking the local storage 
+
+        //checking if new best has been set
+        let allTimeBest = Number(localStorage.getItem('best2048NumberGame'));
+        if(allTimeBest === null){
+            allTimeBest = 0;
+        }
+        if(sum > allTimeBest){
+            localStorage.setItem('best2048NumberGame',sum);
+            console.log(max);
+        }
+
+        localStorage.setItem("board2048NumberGame",this.board);
+        localStorage.setItem("playable2048NumberGame",1);
 
         return [sum,max];
     }
@@ -451,7 +468,7 @@ class Board{
                 }
                 count ++;
             }
-        }        
+        }
     }
 
     //when user presses a key
@@ -484,6 +501,8 @@ class Board{
 
     //returns true if game is playable
     checkPlayable(){
+        let flag = false;
+
         if(this.emptyPos.length) return true;
         for(let i =0 ; i < 3 ; i++){
             for(let j = 0; j < 3 ; j++ ){
@@ -492,7 +511,6 @@ class Board{
                 }
             }
         }
-        let flag = false;
         for( let i = 0 ; i < 3 ; i++){
             if(this.board[i][3] === this.board[i+1][3]){
                 flag = true;
@@ -501,7 +519,31 @@ class Board{
                 flag = true;
             }
         }
+        
         return flag;
+    }
+
+    //setsBoardFromLocal
+    setFromLocal(){
+        let boardOnLocalStorage = localStorage.getItem('board2048NumberGame');
+        let bestOnLocalStorage = localStorage.getItem('best2048NumberGame');
+
+        let boardArray = boardOnLocalStorage.split(",",16);
+
+        for(let i = 0; i < 4; i++){
+            for(let j =0 ; j<4 ; j++){
+                let num = boardArray[i*4+j];
+                if(num){
+                    this.board[i][j] = Number(num);
+                    let childTile = document.createElement('div');
+                    childTile.classList.add("grid-tile",`pos-${i*4+j}`,`color-${num}`,'scale-in-center');
+                    childTile.textContent = Number(num);
+                    this.parent.appendChild(childTile);
+                }
+            }
+        }
+        this.updateEmptyPos();
+        return [boardArray.reduce((sum,val)=>sum+Number(val),0),Math.max(...boardArray),bestOnLocalStorage];
     }
 }
 

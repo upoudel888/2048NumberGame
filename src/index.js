@@ -4,7 +4,6 @@ import App from './App'
 import './index.css';
 import Board from './modules/board'
 
-
 let game = new Board();
 
 ReactDOM.render(

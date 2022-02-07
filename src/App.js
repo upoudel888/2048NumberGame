@@ -6,9 +6,15 @@ import {Grid,Scores} from './components'
 import './App.css';
 
 function App({game}) {
-    
+  // console.log('this thing rerenders');
   const [scoreMaxArr,setScoreMaxArr] = useState([0,0]);
   const [gameStatus,setGameStatus] = useState(null); //becomes 'lost' if user is out of moves
+
+  // if(firstRender){
+  //   alert("wassup biyoch");
+  //   setFirstRender(false);
+  // }
+
 
   const handleKeyPress = (e)=>{
 
@@ -34,6 +40,9 @@ function App({game}) {
       case 'ArrowUp':
         game.w_pressed();
         break;
+      case 'm':
+        game.setFromLocal();
+        break;
       default:
         updateFlag = false;
         break;
@@ -47,7 +56,7 @@ function App({game}) {
       }else{
         if(game.checkPlayable()===false){
           setGameStatus('lost')
-          game.needsReset = true;
+          localStorage.setItem('playable2048NumberGame',0);
         }
       }
     } 
@@ -74,6 +83,7 @@ function App({game}) {
     <React.Fragment>
       <Scores scoreMax = {scoreMaxArr} newGame = {handleNewGame}/>
       <Grid arr = {[...Array(16).keys()]} name = {['game-container','grid-cell']} tryAgain = {handleNewGame} gameStatus = {gameStatus}/>
+      <button onClick = {()=>{game.setParent();game.setFromLocal();}}> purano </button>
     </React.Fragment>   
   );
 }

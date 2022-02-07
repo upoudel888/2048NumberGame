@@ -49,6 +49,7 @@
   cursor: pointer;
   border-radius: 0.5rem;
   box-shadow: 1px 1px 1px 1px rgba(45, 44, 44, 0.884);
+  border: none;
 }
 
 .new-game:hover{
