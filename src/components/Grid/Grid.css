@@ -168,15 +168,19 @@ background-color: rgb(13, 179, 185);
     background-color: rgb(191, 118, 240);
 }
 .color-1024{
+    font-size: 0.8em;
     background-color: rgb(65, 101, 209);
 }
 .color-2048{
+    font-size: 0.8em;
     background-color: rgb(255, 60, 236);
 }
 .color-4096{
+    font-size: 0.8em;
     background-color: rgb(216, 15, 238) ;
 }
 .color-8192{
+    font-size: 0.8em;
     background-color: blueviolet;
 }
 
