@@ -2,7 +2,7 @@
 import React from 'react'
 import {useState,useEffect} from 'react'
 
-import {Grid,Scores} from './components'
+import {Grid,Scores,Description} from './components'
 import './App.css';
 
 function App({game}) {
@@ -91,10 +91,12 @@ function App({game}) {
   },[]);
 
   return (
-    <React.Fragment>
+    <div className="whole-game-container">
       <Scores scoreMaxBest = {[scoreMaxArr,bestScore]} newGame = {handleNewGame}/>
       <Grid arr = {[...Array(16).keys()]} name = {['game-container','grid-cell']} tryAgain = {handleNewGame} gameStatus = {gameStatus} />
-    </React.Fragment>   
+      <Description/>
+    </div>
+
   );
 }
 

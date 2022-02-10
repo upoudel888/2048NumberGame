@@ -1,43 +1,43 @@
-.score-board{
+.score-board {
   display: grid;
   grid-template-rows: 1fr 0.5fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
-  margin: 2rem auto 1rem auto;
+  margin: 0rem auto 1rem auto;
   padding: 0.1rem;
   width: 23rem;
-  height: 15vh;
   border-radius: 0.4rem;
-  border: 1px solid #fdf7f2;
-  background-color:#d9d7cad9;
-  
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
-
-.score,.max{
-  color: #0f1f38;
+.score,
+.max {
+  color: #ffffff;
   padding: 0.1rem;
   text-align: center;
   font-size: 1.5rem;
-  transform: translateY(-45%);
+  transform: translateY(-25%);
 }
 
-.score-numbers{
+.score-numbers {
   font-size: 1.8rem;
-  color: #1B4B5A;
-  font-weight:600;
+  color: #446129;
+  font-weight: 600;
+
   /* color: rgb(24, 123, 65); */
 }
 
-
-.score{
+.score {
   grid-column: 1/2;
   grid-row: 2/4;
+  border-right: none;
 }
-.max{
+.max {
   grid-column: 2/3;
   grid-row: 2/4;
+  border-left: none;
 }
-.best-score{
+.best-score {
+  color: #ffffff;
   grid-column: 2/4;
   grid-row: 3/4;
   padding-right: 0.2rem;
@@ -46,31 +46,32 @@
   font-size: 1.7rem;
 }
 
-.new-game{
+.new-game {
   grid-column: 3/4;
   grid-row: 1/2;
   margin-top: 0.6rem;
   margin-right: 0.2rem;
+  margin-left: 0.2rem;
   padding: 0.3rem;
-  
-  color: white; 
+
+  color: #446129;
   font-size: 1rem;
   font-size: 1.2rem;
-  font-weight: 600;
+  /* font-weight: 600; */
 
-  background-color:  rgba(1, 152, 117, 1 );
+  background-color: #ffffff;
   border-radius: 0.5rem;
+  outline: none;
   border: none;
-  box-shadow: 1px 1px 1px 1px rgba(45, 44, 44, 0.884);
- 
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.4);
+
   cursor: pointer;
 }
 
-.new-game:hover{
-  box-shadow: 1px 1px 2px 1px rgba(45, 44, 44, 0.884);
-  background-color:rgb(85, 144, 114);
-}
-
-.new-game:active{
-  background-color:rgb(85, 144, 114);
+.new-game:hover {
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.5);
+  transition: 0.1s ease-in;
+  transform: scale(0.96, 0.96);
+  -webkit-transform: scale(0.96, 0.96);
+  -moz-transform: scale(0.96, 0.96);
 }
