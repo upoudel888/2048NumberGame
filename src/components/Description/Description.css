@@ -1,0 +1,20 @@
+.description {
+  width: 22.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #afafaf;
+  overflow: hidden;
+}
+
+.big {
+  font-size: 2.5rem;
+  color: white;
+}
+b {
+  color: white;
+}
