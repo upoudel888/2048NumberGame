@@ -2,41 +2,49 @@
 import React from 'react'
 import {useState,useEffect} from 'react'
 
+import swipeDetect from './modules/mobileEvents';
+
 import {Grid,Scores,Description} from './components'
 import './App.css';
 
 function App({game}) {
-  
+
   const [scoreMaxArr,setScoreMaxArr] = useState([0,0]);
   const [gameStatus,setGameStatus] = useState(null); //becomes 'lost' if user is out of moves
   const [bestScore,setBestScore] = useState(0);
 
   const handleKeyPress = (e)=>{
+    console.log(e.key);
+    gameHandler(e.key); 
+  }
+
+  const gameHandler = (direction) =>{
 
     let updateFlag = true;
     let boardBeforeUpdate = game.board;
     let status = -1;
 
-    console.log(e.key);
-    switch(e.key){
+    console.log(direction);
+    switch(direction){
       case 'a':
       case 'ArrowLeft':
+      case 'left':
         game.a_pressed();
         break;
       case 's':
       case 'ArrowDown':
+      case 'down':
         game.s_pressed();
         break;
       case 'd':
       case 'ArrowRight':
+      case 'right':
         game.d_pressed();
         break;
       case 'w':
       case 'ArrowUp':
+      case 'up':
         game.w_pressed();
-        break;
-      case 'm':
-        game.setFromLocal();
         break;
       default:
         updateFlag = false;
@@ -68,14 +76,20 @@ function App({game}) {
     setScoreMaxArr([0,0]);
   }
 
+  
   useEffect(()=>{
       document.addEventListener("keydown",handleKeyPress);
-      
+      let el = document.querySelector('.overlay');
+      swipeDetect(el,directionCallback)
       return ()=>{
           document.removeEventListener("keydown",handleKeyPress)
       }
   },[game]);
-
+  
+  const directionCallback = direction => {
+    
+    gameHandler(direction);
+  };
   //this sippet runs after the first render is complete
   //it sets the board back to where the user left
   useEffect(()=>{
@@ -88,6 +102,10 @@ function App({game}) {
     let scoreOnLocal = localStorage.getItem('best2048NumberGame');
     if(scoreOnLocal === null) scoreOnLocal = 0;
     setBestScore(Number(scoreOnLocal));
+    
+    
+    
+    
   },[]);
 
   return (
